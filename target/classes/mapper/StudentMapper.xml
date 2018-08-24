@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzl.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.wangzl.bean.Student">
+    <id column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_gender" jdbcType="CHAR" property="studentGender" />
+    <result column="student_password" jdbcType="VARCHAR" property="studentPassword" />
+    <result column="student_national" jdbcType="VARCHAR" property="studentNational" />
+    <result column="student_address" jdbcType="VARCHAR" property="studentAddress" />
+    <result column="student_enrollment_time" jdbcType="VARCHAR" property="studentEnrollmentTime" />
+    <result column="student_other" jdbcType="VARCHAR" property="studentOther" />
+    <result column="student_class_id" jdbcType="INTEGER" property="studentClassId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    student_id, student_name, student_gender, student_password, student_national, student_address, 
+    student_enrollment_time, student_other, student_class_id
+  </sql>
+  <select id="selectByExample" parameterType="com.wangzl.bean.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wangzl.bean.StudentExample">
+    delete from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wangzl.bean.Student">
+    insert into student (student_id, student_name, student_gender, 
+      student_password, student_national, student_address, 
+      student_enrollment_time, student_other, student_class_id
+      )
+    values (#{studentId,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, #{studentGender,jdbcType=CHAR}, 
+      #{studentPassword,jdbcType=VARCHAR}, #{studentNational,jdbcType=VARCHAR}, #{studentAddress,jdbcType=VARCHAR}, 
+      #{studentEnrollmentTime,jdbcType=VARCHAR}, #{studentOther,jdbcType=VARCHAR}, #{studentClassId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangzl.bean.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="studentGender != null">
+        student_gender,
+      </if>
+      <if test="studentPassword != null">
+        student_password,
+      </if>
+      <if test="studentNational != null">
+        student_national,
+      </if>
+      <if test="studentAddress != null">
+        student_address,
+      </if>
+      <if test="studentEnrollmentTime != null">
+        student_enrollment_time,
+      </if>
+      <if test="studentOther != null">
+        student_other,
+      </if>
+      <if test="studentClassId != null">
+        student_class_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentGender != null">
+        #{studentGender,jdbcType=CHAR},
+      </if>
+      <if test="studentPassword != null">
+        #{studentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNational != null">
+        #{studentNational,jdbcType=VARCHAR},
+      </if>
+      <if test="studentAddress != null">
+        #{studentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEnrollmentTime != null">
+        #{studentEnrollmentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="studentOther != null">
+        #{studentOther,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClassId != null">
+        #{studentClassId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wangzl.bean.StudentExample" resultType="java.lang.Long">
+    select count(*) from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student
+    <set>
+      <if test="record.studentId != null">
+        student_id = #{record.studentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentName != null">
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentGender != null">
+        student_gender = #{record.studentGender,jdbcType=CHAR},
+      </if>
+      <if test="record.studentPassword != null">
+        student_password = #{record.studentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentNational != null">
+        student_national = #{record.studentNational,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentAddress != null">
+        student_address = #{record.studentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentEnrollmentTime != null">
+        student_enrollment_time = #{record.studentEnrollmentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentOther != null">
+        student_other = #{record.studentOther,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentClassId != null">
+        student_class_id = #{record.studentClassId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student
+    set student_id = #{record.studentId,jdbcType=INTEGER},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      student_gender = #{record.studentGender,jdbcType=CHAR},
+      student_password = #{record.studentPassword,jdbcType=VARCHAR},
+      student_national = #{record.studentNational,jdbcType=VARCHAR},
+      student_address = #{record.studentAddress,jdbcType=VARCHAR},
+      student_enrollment_time = #{record.studentEnrollmentTime,jdbcType=VARCHAR},
+      student_other = #{record.studentOther,jdbcType=VARCHAR},
+      student_class_id = #{record.studentClassId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangzl.bean.Student">
+    update student
+    <set>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentGender != null">
+        student_gender = #{studentGender,jdbcType=CHAR},
+      </if>
+      <if test="studentPassword != null">
+        student_password = #{studentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNational != null">
+        student_national = #{studentNational,jdbcType=VARCHAR},
+      </if>
+      <if test="studentAddress != null">
+        student_address = #{studentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEnrollmentTime != null">
+        student_enrollment_time = #{studentEnrollmentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="studentOther != null">
+        student_other = #{studentOther,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClassId != null">
+        student_class_id = #{studentClassId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangzl.bean.Student">
+    update student
+    set student_name = #{studentName,jdbcType=VARCHAR},
+      student_gender = #{studentGender,jdbcType=CHAR},
+      student_password = #{studentPassword,jdbcType=VARCHAR},
+      student_national = #{studentNational,jdbcType=VARCHAR},
+      student_address = #{studentAddress,jdbcType=VARCHAR},
+      student_enrollment_time = #{studentEnrollmentTime,jdbcType=VARCHAR},
+      student_other = #{studentOther,jdbcType=VARCHAR},
+      student_class_id = #{studentClassId,jdbcType=INTEGER}
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+</mapper>
