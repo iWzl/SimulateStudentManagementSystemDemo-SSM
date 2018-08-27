@@ -158,8 +158,6 @@
 
 </body>
 </html>
-
-
 <script>
     var teacherId = ${teacherId};
     var classid =-1;
@@ -185,7 +183,6 @@
         $("#toPageClassCode").val(classCode);
         $("#toStudentPage").submit();
     });
-
     //解析页面
     function buildClassTable(result) {
         $("#classTableBody").empty();
